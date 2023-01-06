@@ -7,11 +7,15 @@ class Error(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-	### Сообщения об ошибках для пользователей ###
+	### Модуль вывода ошибок пользователю ###
+
+	### Команды через слеш ###
 	@commands.Cog.listener()
 	async def on_application_command_error(self, ctx: discord.ApplicationContext, error: discord.DiscordException):
 		if isinstance(error, commands.MissingPermissions):
 			await ctx.respond(embed = discord.Embed(description = '**Недостаточно прав для использования!** 🤖', color = discord.Colour.red()))
+		elif isinstance(error, commands.PrivateMessageOnly):
+			await ctx.respond(embed = discord.Embed(description = '**Доступно только в личных сообщениях!** 🤖', color = discord.Colour.red()))
 		elif isinstance(error, commands.UserInputError):
 			await ctx.respond(embed = discord.Embed(description = '**Неверно указан один из аргументов!** 🤖', color = discord.Colour.red()))
 		elif isinstance(error, commands.NotOwner):
@@ -20,10 +24,13 @@ class Error(commands.Cog):
 			await ctx.respond(embed = discord.Embed(description = '**Что-то пошло не так!** 🤖', color = discord.Colour.red()))
 			raise error
 
+	### Команды через префикс ###
 	@commands.Cog.listener()
 	async def on_command_error(self, ctx, error):
 		if isinstance(error, commands.MissingPermissions):
 			await ctx.reply(embed = discord.Embed(description = '**Недостаточно прав для использования!** 🤖', color = discord.Colour.red()))
+		elif isinstance(error, commands.PrivateMessageOnly):
+			await ctx.reply(embed = discord.Embed(description = '**Доступно только в личных сообщениях!** 🤖', color = discord.Colour.red()))
 		elif isinstance(error, commands.UserInputError):
 			await ctx.reply(embed = discord.Embed(description = '**Неверно указан один из аргументов!** 🤖', color = discord.Colour.red()))
 		elif isinstance(error, commands.NotOwner):

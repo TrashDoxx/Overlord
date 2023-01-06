@@ -17,11 +17,20 @@ class Misc(commands.Cog):
 			return
 		await channel.send(message)
 
-	### Анимешки ###
-	@commands.slash_command(description = 'Взглянуть на эротическую картинку')
-	@option('category', description = 'Выберите категорию', choices = ['waifu', 'neko'])
-	async def waifu(self, ctx, category):
+	### Порядочные анимешки ###
+	@commands.slash_command(description = 'Взглянуть на милую картинку')
+	@option('category', description = 'Выберите категорию', choices = ['waifu', 'neko', 'megumin'])
+	async def sfw(self, ctx, category):
 		response = requests.get(f'https://api.waifu.pics/sfw/{category}')
+		image = response.json()['url']
+		await ctx.respond(image)
+
+	### Непорядочные анимешки ###
+	@commands.dm_only()
+	@commands.slash_command(description = 'Взглянуть на эротическую картинку')
+	@option('category', description = 'Выберите категорию', choices = ['waifu', 'neko', 'trap'])
+	async def nsfw(self, ctx, category):
+		response = requests.get(f'https://api.waifu.pics/nsfw/{category}')
 		image = response.json()['url']
 		await ctx.respond(image)
 
