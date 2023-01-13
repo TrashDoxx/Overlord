@@ -45,3 +45,4 @@ class Misc(commands.Cog):
 
 def setup(bot):
 	bot.add_cog(Misc(bot))
+	print('Модуль развлечений - подключён!')

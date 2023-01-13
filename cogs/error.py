@@ -43,3 +43,4 @@ class Error(commands.Cog):
 
 def setup(bot):
 	bot.add_cog(Error(bot))
+	print('Модуль вывода ошибок - подключён!')
